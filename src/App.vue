@@ -1,28 +1,33 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-app>
+      <c-learn></c-learn>
+      <!-- Loader component -->
+        <c-loader :loaderFlag="loaderFlag"></c-loader>
+      <!-- End of Loader component -->
+      <!-- Login Page -->
+        <c-login></c-login>
+      <!-- End of Login Page -->
+  </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import LearnFile from './components/Learn';
+import LoaderComponent from './components/general/SiteLoader';
+import LoginForm from './components/Login';
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+ data(){
+    return{
+        loaderFlag: false
+    }
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  },
+  components: {
+    "c-learn": LearnFile,    
+    "c-loader": LoaderComponent,    
+    "c-login": LoginForm,
+
+  }
+};
+</script>
