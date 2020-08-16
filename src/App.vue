@@ -1,6 +1,6 @@
 <template>
   <v-app>
-      <c-learn></c-learn>
+      <!-- <c-learn></c-learn> -->
       <!-- Loader component -->
         <c-loader :loaderFlag="loaderFlag"></c-loader>
       <!-- End of Loader component -->
@@ -12,7 +12,7 @@
 
 <script>
 
-import LearnFile from './components/Learn';
+// import LearnFile from './components/Learn';
 import LoaderComponent from './components/general/SiteLoader';
 import LoginForm from './components/Login';
 
@@ -24,7 +24,7 @@ export default {
 
   },
   components: {
-    "c-learn": LearnFile,    
+    // "c-learn": LearnFile,    
     "c-loader": LoaderComponent,    
     "c-login": LoginForm,
 
