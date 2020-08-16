@@ -11,7 +11,6 @@
 </template>
 
 <script>
-
 // import LearnFile from './components/Learn';
 import LoaderComponent from './components/general/SiteLoader';
 import LoginForm from './components/Login';
