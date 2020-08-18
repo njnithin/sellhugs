@@ -1,5 +1,5 @@
 <template>
-  <v-container fill-height fluid class="login-container">
+  <v-container fill-height fluid class="login-container" v-if="notLoggedIn">
 
     <v-row  justify="center" >
           <v-card max-width="320" :class="{'shake' : loginData.shakeCard === true}" class="login-wrap px-6 py-4 rounded-lg">
@@ -35,6 +35,9 @@
 <script>
   import axios from "axios";
   export default {
+    props:{
+      notLoggedIn: Boolean
+    },
     data(){
       return {
         inputRules: [
@@ -58,7 +61,7 @@
         var self =this;
         if(this.$refs.loginForm.validate()){
           self.loginData.loginFlag =true;
-          axios.post('https://shop-store-backend.herokuapp.com/login', {
+          axios.post('https://shop-store-backend.herokuapp.com/auth/login', {
               "username": this.loginData.username,
               "password": this.loginData.password
             }).then(function(response) {
@@ -66,12 +69,14 @@
               self.userInfo.token = response.data.authenticationToken;
               const config = {
                 headers:{
-                  Authorization: "Bearer " + self.userInfo.token
+                  'Authorization': 'Bearer ' + self.userInfo.token
                 }
               }
-              console.log(config)
-              axios.get('https://shop-store-backend.herokuapp.com/greet', config).then(function(response) {
-                 console.log(response);
+              axios.get('https://shop-store-backend.herokuapp.com/auth/greet', config).then(function(response) {
+                // console.log(response , self.notLoggedIn)
+                 alert(response.data);
+                // self.notLoggedIn = false;
+
               }).catch(function(error) {
                  console.log(error);
 
@@ -79,7 +84,6 @@
             }).catch(function() {
               // console.log(error)
               self.loginData.shakeCard = true;
-              console.log(self.loginData.shakeCard)
               setTimeout(function(){
                 self.loginData.shakeCard = false;
               },1000);

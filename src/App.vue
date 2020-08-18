@@ -5,7 +5,7 @@
         <c-loader :loaderFlag="loaderFlag"></c-loader>
       <!-- End of Loader component -->
       <!-- Login Page -->
-        <c-login></c-login>
+        <c-login :notLoggedIn="notLoggedIn"></c-login>
       <!-- End of Login Page -->
   </v-app>
 </template>
@@ -18,7 +18,8 @@ import LoginForm from './components/Login';
 export default {
  data(){
     return{
-        loaderFlag: false
+        loaderFlag: false,
+        notLoggedIn: true,
     }
 
   },
