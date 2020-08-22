@@ -1,19 +1,16 @@
 <template>
-  <v-app>
-      <!-- <c-learn></c-learn> -->
-      <!-- Loader component -->
-        <c-loader :loaderFlag="loaderFlag"></c-loader>
-      <!-- End of Loader component -->
-      <!-- Login Page -->
-        <c-login :notLoggedIn="notLoggedIn"></c-login>
-      <!-- End of Login Page -->
-  </v-app>
+  
+     <v-app>
+      <router-view >
+   
+      </router-view>
+    </v-app>
+  
+ 
 </template>
 
 <script>
-// import LearnFile from './components/Learn';
-import LoaderComponent from './components/general/SiteLoader';
-import LoginForm from './components/Login';
+
 
 export default {
  data(){
@@ -24,10 +21,7 @@ export default {
 
   },
   components: {
-    // "c-learn": LearnFile,    
-    "c-loader": LoaderComponent,    
-    "c-login": LoginForm,
-
+   
   }
 };
 </script>

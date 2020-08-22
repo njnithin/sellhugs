@@ -1,5 +1,6 @@
 <template>
-  <v-container fill-height fluid class="login-container" v-if="notLoggedIn">
+  <!-- <v-container fill-height fluid class="login-container" v-if="notLoggedIn"> -->
+  <v-container fill-height fluid class="login-container">
 
     <v-row  justify="center" >
           <v-card max-width="320" :class="{'shake' : loginData.shakeCard === true}" class="login-wrap px-6 py-4 rounded-lg">
