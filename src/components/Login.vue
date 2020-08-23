@@ -73,7 +73,8 @@
                   'Authorization': 'Bearer ' + self.userInfo.token
                 }
               }
-              axios.get('https://shop-store-backend.herokuapp.com/auth/greet', config).then(function(response) {
+              console.log(config)
+              axios.get('https://shop-store-backend.herokuapp.com/user/greet', config).then(function(response) {
                 // console.log(response , self.notLoggedIn)
                  alert(response.data);
                 // self.notLoggedIn = false;

@@ -1,6 +1,7 @@
 <template>
-  
+     
      <v-app>
+      <c-header ></c-header>
       <router-view >
    
       </router-view>
@@ -11,6 +12,7 @@
 
 <script>
 
+import header from './components/general/Header';
 
 export default {
  data(){
@@ -21,7 +23,7 @@ export default {
 
   },
   components: {
-   
+    'c-header': header
   }
 };
 </script>
