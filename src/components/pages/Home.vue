@@ -6,7 +6,7 @@
       hide-delimiter-background
       show-arrows-on-hover
       interval="5000"
-      reverse= false
+      :reverse= "false"
     >
       <v-carousel-item
         v-for="(slide, i) in slides"
@@ -31,6 +31,9 @@
 
 <script>
  export default{
+  created(){
+    console.log(this.baseURL, this.title)
+  },
   data () {
     return {
       colors: [
@@ -47,6 +50,8 @@
         'Fourth',
         'Fifth',
       ],
+      baseURL: process.env.VUE_APP_URL, 
+      title: process.env.VUE_APP_TITLE 
     }
   }
 }

@@ -4,6 +4,7 @@
       color="light"
       dense
       dark
+      app
     >
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
 

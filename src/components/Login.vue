@@ -39,8 +39,13 @@
     props:{
       notLoggedIn: Boolean
     },
+    created(){
+      console.log(this.baseURL,this.title);
+    },
     data(){
       return {
+        baseURL: process.env.VUE_APP_URL, 
+        title: process.env.VUE_APP_TITLE ,
         inputRules: [
           v=> v.length > 0 || "Please Fill"
         ],
@@ -62,7 +67,7 @@
         var self =this;
         if(this.$refs.loginForm.validate()){
           self.loginData.loginFlag =true;
-          axios.post('https://shop-store-backend.herokuapp.com/auth/login', {
+          axios.post('http://localhost:8080/auth/login', {
               "username": this.loginData.username,
               "password": this.loginData.password
             }).then(function(response) {
@@ -74,7 +79,7 @@
                 }
               }
               console.log(config)
-              axios.get('https://shop-store-backend.herokuapp.com/user/greet', config).then(function(response) {
+              axios.get('http://localhost:8080/user/greet', config).then(function(response) {
                 // console.log(response , self.notLoggedIn)
                  alert(response.data);
                 // self.notLoggedIn = false;
