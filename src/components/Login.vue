@@ -67,7 +67,7 @@
         var self =this;
         if(this.$refs.loginForm.validate()){
           self.loginData.loginFlag =true;
-          axios.post('http://localhost:8080/auth/login', {
+          axios.post(this.baseURL+'/auth/login', {
               "username": this.loginData.username,
               "password": this.loginData.password
             }).then(function(response) {
@@ -79,7 +79,7 @@
                 }
               }
               console.log(config)
-              axios.get('http://localhost:8080/user/greet', config).then(function(response) {
+              axios.get(this.baseURL+'/user/greet', config).then(function(response) {
                 // console.log(response , self.notLoggedIn)
                  alert(response.data);
                 // self.notLoggedIn = false;
