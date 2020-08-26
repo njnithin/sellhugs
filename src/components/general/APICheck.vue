@@ -11,14 +11,19 @@
         
       </v-flex>
       <v-flex v-else>
-        <v-card class="pa-4 my-10"> 
+         <v-card class="pa-4 my-10"> 
           <div class="mt-10 mb-4 text-h4">Data</div>
-          <v-card width="100%" :key="'data-'+index" v-for="(eachData,key,index) in serverResponse.data" class="pa-3 mb-1">
+          <v-card width="100%"   class="pa-3 mb-1">
             
-            <div class="primary--text mb-2">
-              {{ key }} 
-            </div>
-            <span>{{ eachData }}</span>
+            <span>{{ serverResponse.data }}</span>
+          
+          </v-card>
+        </v-card>
+        <v-card class="pa-4 my-10"> 
+          <div class="mt-10 mb-4 text-h4">Status</div>
+          <v-card width="100%"   class="pa-3 mb-1">
+            
+            <span>{{ serverResponse.status }}</span>
           
           </v-card>
         </v-card>
@@ -62,8 +67,18 @@
     },
     created(){
       var self = this;
+      axios.get('https://shop-store-backend.herokuapp.com/store/home',{
+
+      }).then(function(response){
+        self.serverError ="";
+        console.log(response)
+        self.serverResponse = response;
+
+      }).catch(function(error){
+        self.serverError = error;
+      });
       
-      axios.post('https://shop-store-backend.herokuapp.com/auth/login', {
+/*      axios.post('https://shop-store-backend.herokuapp.com/auth/login', {
               "username": "ADMIN",
               "password": "ADMIN"
             }).then(function(response) {
@@ -73,7 +88,7 @@
 
             }).catch(function(error) {
               self.serverError = error;        
-            });
+            });*/
     }
     
   } 

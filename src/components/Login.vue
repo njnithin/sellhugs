@@ -1,7 +1,6 @@
 <template>
   <!-- <v-container fill-height fluid class="login-container" v-if="notLoggedIn"> -->
-  <v-container fill-height fluid class="login-container">
-
+  <v-container fill-height fluid class="login-container"> 
     <v-row  justify="center" >
           <v-card max-width="320" :class="{'shake' : loginData.shakeCard === true}" class="login-wrap px-6 py-4 rounded-lg">
             <v-card-title   justify="center" class="login-title center pa-0 my-5">
@@ -40,12 +39,10 @@
       notLoggedIn: Boolean
     },
     created(){
-      console.log(this.baseURL,this.title);
+      console.log("base app url : " + this.$baseURL);
     },
     data(){
       return {
-        baseURL: process.env.VUE_APP_URL, 
-        title: process.env.VUE_APP_TITLE ,
         inputRules: [
           v=> v.length > 0 || "Please Fill"
         ],
@@ -67,7 +64,7 @@
         var self =this;
         if(this.$refs.loginForm.validate()){
           self.loginData.loginFlag =true;
-          axios.post(this.baseURL+'/auth/login', {
+          axios.post( self.$baseURL +'/auth/login', {
               "username": this.loginData.username,
               "password": this.loginData.password
             }).then(function(response) {
@@ -78,8 +75,8 @@
                   'Authorization': 'Bearer ' + self.userInfo.token
                 }
               }
-              console.log(config)
-              axios.get(this.baseURL+'/user/greet', config).then(function(response) {
+              self.$loginStatus = 'logout';
+              axios.get( self.$baseURL +'/user/greet', config).then(function(response) {
                 // console.log(response , self.notLoggedIn)
                  alert(response.data);
                 // self.notLoggedIn = false;
@@ -88,6 +85,7 @@
                  console.log(error);
 
               });
+              self.$router.push({ path: 'home' });
             }).catch(function() {
               // console.log(error)
               self.loginData.shakeCard = true;
