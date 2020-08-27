@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  import axios from "axios";
+  // import axios from "axios";
   export default {
     props:{
       notLoggedIn: Boolean
@@ -53,10 +53,10 @@
           "loginFlag": false,
           "shakeCard": false
         },
-        userInfo: {
+   /*     userInfo: {
           "name": "guest",
           "token": ""
-        }
+        }*/
       }
     },
     methods:{
@@ -64,19 +64,22 @@
         var self =this;
         if(this.$refs.loginForm.validate()){
           self.loginData.loginFlag =true;
-          axios.post( self.$baseURL +'/auth/login', {
+          self.$axios.post( self.$baseURL +'/auth/login', {
               "username": this.loginData.username,
               "password": this.loginData.password
             }).then(function(response) {
-              self.userInfo.name = response.data.username;
-              self.userInfo.token = response.data.authenticationToken;
+              // self.userInfo.name = response.data.username;
+              // self.userInfo.token = response.data.authenticationToken;
+              var token = response.data.authenticationToken;
               const config = {
                 headers:{
-                  'Authorization': 'Bearer ' + self.userInfo.token
+                  'Authorization': 'Bearer ' + token
                 }
               }
               self.$loginStatus = 'logout';
-              axios.get( self.$baseURL +'/user/greet', config).then(function(response) {
+              self.loginData.username = "";
+              self.loginData.password ="";
+              self.$axios.get( self.$baseURL +'/user/greet', config).then(function(response) {
                 // console.log(response , self.notLoggedIn)
                  alert(response.data);
                 // self.notLoggedIn = false;
@@ -92,7 +95,7 @@
               setTimeout(function(){
                 self.loginData.shakeCard = false;
               },1000);
-            }) .finally(function () {
+            }).finally(function () {
               self.loginData.loginFlag = false; 
             });  
 

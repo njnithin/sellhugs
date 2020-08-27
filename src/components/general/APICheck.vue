@@ -56,7 +56,7 @@
   </v-container>
 </template>
 <script>
-  import axios from "axios";
+  // import axios from "axios";
   export default {
     data(){
       return{
@@ -67,7 +67,7 @@
     },
     created(){
       var self = this;
-      axios.get('https://shop-store-backend.herokuapp.com/store/home',{
+ /*     self.$axios.get(self.$baseURL+='/store/home',{
 
       }).then(function(response){
         self.serverError ="";
@@ -76,19 +76,16 @@
 
       }).catch(function(error){
         self.serverError = error;
-      });
+      });*/
       
-/*      axios.post('https://shop-store-backend.herokuapp.com/auth/login', {
-              "username": "ADMIN",
-              "password": "ADMIN"
-            }).then(function(response) {
+      self.$axios.get(self.$baseURL+'/store/home').then(function(response) {
               self.serverError = "";
               self.serverResponse = response;
               console.log(self.serverResponse);
 
             }).catch(function(error) {
               self.serverError = error;        
-            });*/
+            });
     }
     
   } 

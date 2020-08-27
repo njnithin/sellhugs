@@ -6,6 +6,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import './assets/css/animations.css';
 import './assets/css/general.css';
+import VuePageTransition from 'vue-page-transition'
 import VueRouter from 'vue-router';
 import Routes from './routes';
 Vue.prototype.$axios = axios;
@@ -40,6 +41,7 @@ Vue.mixin({
 })
 Vue.config.productionTip = false;
 Vue.use(VueAxios, axios);
+Vue.use(VuePageTransition);
 Vue.use(VueRouter);
 const router = new VueRouter({
   base: process.env.VUE_APP_BASE,

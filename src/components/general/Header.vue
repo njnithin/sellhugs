@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div >
     <v-app-bar
       color="light"
       dense
       dark
-      app
+      height="80"
     >
       <v-app-bar-nav-icon @click="drawer=!drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>Sellhugs</v-toolbar-title>
@@ -115,11 +115,15 @@
         methods:{
           userLogout(){
             var self = this;
-            this.$axios.get(self.$baseURL+'/auth/delete').then(function (response){
-              console.log(response)
+            self.$axios.post(self.$baseURL+'/auth/logout').then(function (response){
+              if(response.status === 200){
+                alert(response.data.message);
+                self.$loginStatus = "login";
+              }
 
             }).catch(function(error){
               console.log(error);
+              alert("Logout failed");
             });
             // this.$loginStatus = 'login';
 
