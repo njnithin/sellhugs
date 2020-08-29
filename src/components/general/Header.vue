@@ -12,11 +12,11 @@
       <v-spacer></v-spacer>
       <div class="login-logout">
         
-        <v-btn :title="this.$loginStatus"  v-if="this.$loginStatus === 'login'" icon to="/login">
+        <v-btn title="Login"  v-if="this.$loginStatus === 'logged out'" icon to="/login">
           <v-icon >input</v-icon>
         </v-btn>
-        <div  v-else-if="this.$loginStatus === 'logout'">
-          <v-btn :title="this.$loginStatus"  icon >
+        <div  v-else-if="this.$loginStatus === 'logged in'">
+          <v-btn title="Logout"  icon >
            <v-icon @click="userLogout">launch</v-icon>
           </v-btn>
           <v-btn title="Account"  icon >
@@ -24,7 +24,6 @@
           </v-btn>         
         </div>
         
-
       </div>
 
 
@@ -115,18 +114,15 @@
         methods:{
           userLogout(){
             var self = this;
-            self.$axios.post(self.$baseURL+'/auth/logout').then(function (response){
+            self.$axios.post(self.$baseURL+'/auth/logout').then( response => {
               if(response.status === 200){
                 alert(response.data.message);
-                self.$loginStatus = "login";
+                self.$loginStatus = "logged out";
               }
 
-            }).catch(function(error){
-              console.log(error);
-              alert("Logout failed");
+            }).catch( () => {
+              console.log("Logout failed");
             });
-            // this.$loginStatus = 'login';
-
           }
         }
 

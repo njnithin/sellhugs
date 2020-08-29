@@ -78,14 +78,13 @@
         self.serverError = error;
       });*/
       
-      self.$axios.get(self.$baseURL+'/store/home').then(function(response) {
-              self.serverError = "";
-              self.serverResponse = response;
-              console.log(self.serverResponse);
-
-            }).catch(function(error) {
-              self.serverError = error;        
-            });
+      self.$axios.get(self.$baseURL+'/store/home').then( response => {
+        self.serverError = "";
+        self.serverResponse = response;
+        console.log(self.serverResponse);
+      }).catch( error => {
+        self.serverError = error;        
+      });
     }
     
   } 
