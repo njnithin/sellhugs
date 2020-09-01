@@ -11,52 +11,38 @@
 </template>
 
 <script>
+import { authCheck } from "./components/api/api";
 import header from "./components/general/Header";
 import loader from "./components/general/SiteLoader";
 
 export default {
   created() {
-    var self = this;
-    self.loaderFlag = true;
-    self.$axios
-      .get(self.$baseURL + "/store/home")
-      .then(function (response) {
-        if (response.status === 200) {
-          self.$loginStatus = "logged in";
-        }
-      })
-      .catch(() => {
-        self.$axios
-          .post(self.$baseURL + "/auth/refresh")
-          .then(function (response) {
-            if (response.status === 200) {
-              self.$loginStatus = "logged in";
-            }
-          })
-          .catch(() => {
-            self.$router.push({ path: "login" });
-          });
-      })
-      .finally(() => {
-        self.loaderFlag = false;
-      });
+    authCheck();
   },
   mounted() {
+    setTimeout(() => {
+      this.checkAlreadyLogin(this);
+    }, 2000);
     window.onpopstate = () => {
-      if (this.$loginStatus === "logged in" && this.$route.path == "/login") {
-        this.$router.push("/");
-      }
+      this.checkAlreadyLogin(this);
     };
   },
   data() {
     return {
-      loaderFlag: false,
+      loaderFlag: this.$loaderFlag,
       loginStatus: this.$loginStatus,
     };
   },
   components: {
     "c-header": header,
     "c-loader": loader,
+  },
+  methods: {
+    checkAlreadyLogin: (self) => {
+      if (self.$loginStatus === "logged in" && self.$route.path == "/login") {
+        self.$router.push("/");
+      }
+    },
   },
 };
 </script>
