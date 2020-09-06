@@ -56,7 +56,7 @@ export default {
   created() {
     var self = this;
     self.$axios
-      .get(self.$baseURL + "/store/home")
+      .get(self.$baseURL + "/auth/accountVerification/0c6280d4-0c24-4952-b31c-327a2bec24aa")
       .then((response) => {
         self.serverError = "";
         self.serverResponse = response;

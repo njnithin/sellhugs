@@ -25,6 +25,15 @@ const userRegister = (username, email, password) => {
     })
   });
 }
+const userVerify = token => {
+  return new Promise((resolve, reject) => {
+    axios.get(baseURL + "/auth/accountVerification/" + token).then(response => {
+      resolve(response);
+    }).catch(error => {
+      reject(error);
+    })
+  });
+}
 const userLogout = () => {
   return new Promise((resolve, reject) => {
     axios.post(baseURL + '/auth/logout').then(response => {
@@ -55,6 +64,7 @@ const authCheck = () => {
 export {
   userLogin,
   userRegister,
+  userVerify,
   userLogout,
   refreshToken,
   authCheck,

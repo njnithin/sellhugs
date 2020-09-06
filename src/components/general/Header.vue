@@ -10,7 +10,7 @@
           <v-icon>input</v-icon>
         </v-btn>
         <div v-else-if="this.$loginStatus === 'logged in'">
-          <v-btn title="Logout" icon>
+          <v-btn :loading="logoutFlag" title="Logout" icon>
             <v-icon @click="userLogout">launch</v-icon>
           </v-btn>
           <v-btn title="Account" icon>
@@ -77,6 +77,7 @@ export default {
   data() {
     return {
       drawer: false,
+      logoutFlag: false,
       items: [
         { title: "Home", icon: "dashboard", link: "/" },
         // { title: 'API', icon: 'question_answer',link:'/api_check' },
@@ -89,6 +90,7 @@ export default {
   methods: {
     userLogout() {
       var self = this;
+      self.logoutFlag = true;
       userLogout()
         .then((response) => {
           if (response.status === 200) {
@@ -98,6 +100,9 @@ export default {
         })
         .catch(() => {
           console.log("Logout failed");
+        })
+        .finally(() => {
+          self.logoutFlag = false;
         });
     },
   },

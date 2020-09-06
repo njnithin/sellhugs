@@ -55,7 +55,7 @@
             <v-text-field
               v-model="registerData.username"
               append-icon="account_circle"
-              :rules="inputRules"
+              :rules="usernameRules"
               label="Username"
               @focus="$refs.registerForm.resetValidation()"
             ></v-text-field>
@@ -126,6 +126,10 @@ export default {
   data() {
     return {
       inputRules: [(v) => v.length > 0 || "Please Fill"],
+      usernameRules: [
+        (v) => v.length > 0 || "Please Fill",
+        () => this.registerData.uniqueUsername || "Username already exist",
+      ],
       passwordRule: [
         (v) => !!v || "Password is required",
         (v) => (v && v.length >= 6) || "Password must have 6+ characters",
@@ -152,6 +156,7 @@ export default {
         (v) =>
           /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           "E-mail must be valid",
+        () => this.registerData.uniqueEmail || "E-mail already exist",
       ],
       alertShow: false,
       alertMessage: "Alert Message",
@@ -172,6 +177,8 @@ export default {
         cpassword: "",
         email: "",
         role: "",
+        uniqueUsername: true,
+        uniqueEmail: true,
       },
     };
   },
@@ -206,18 +213,12 @@ export default {
       var self = this;
       if (self.$refs.registerForm.validate()) {
         self.registerData.loginFlag = true;
-        console.log(
-          self.registerData.username,
-          self.registerData.email,
-          self.registerData.password
-        );
         userRegister(
           self.registerData.username,
           self.registerData.email,
           self.registerData.password
         )
           .then((response) => {
-            console.log(response);
             if (response.status === 200) {
               self.alertMessage = "";
               self.alertMessage =
@@ -231,15 +232,30 @@ export default {
               self.registerData.password = "";
               self.registerData.cpassword = "";
               self.registerPopup = false;
+              self.$refs.registerForm.resetValidation();
             }
           })
           .catch((error) => {
-            alert("Something went Wrong");
-            console.log(error);
+            console.log(error.response);
+            if (error.response.status === 400) {
+              if (error.response.data.message === "Username already taken.") {
+                console.log(error.response.data.message);
+                self.registerData.uniqueUsername = false;
+              } else if (
+                error.response.data.message === "Email already taken."
+              ) {
+                console.log(error.response.data.message);
+                self.registerData.uniqueEmail = false;
+              }
+              self.$refs.registerForm.validate();
+              setTimeout(() => {
+                self.registerData.uniqueUsername = true;
+                self.registerData.uniqueEmail = true;
+              }, 2500);
+            }
           })
           .finally(() => {
             self.registerData.loginFlag = false;
-            self.$refs.registerForm.resetValidation();
           });
       }
     },
